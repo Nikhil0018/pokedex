@@ -1,3 +1,9 @@
 export const environment = {
-  production: true
+  flags: {
+    production: true,
+  },
+
+  pokeapi: {
+    base: 'https://pokeapi.co/api/v2/',
+  },
 };

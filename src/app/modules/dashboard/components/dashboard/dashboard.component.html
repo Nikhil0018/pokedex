@@ -1,11 +1,78 @@
-<main class="dashboard-wrapper">
+<main class="dashboard-root">
+  <div class="dashboard-wrapper">
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Search a pokemon"
+      [formControl]="searchControl"
+    />
 
-    <section class="body-wrapper">
-        <div class="pokemon-list">
-            <div class="pokemon-card">
-                Yay
-            </div>
+    <div class="body-wrapper">
+      <ng-container *ngIf="loading">
+        <div class="loading-wrapper">
+          <ngx-skeleton-loader
+            *ngFor="let item of skeletonArray"
+            appearance="line"
+            style="height: 124px; width: 100%"
+            [theme]="{ height: '124px', width: '100%' }"
+          ></ngx-skeleton-loader>
         </div>
-    </section>
+      </ng-container>
+      <ng-container *ngIf="!loading">
+        <div *ngIf="pokemonList.length" class="pokemon-list">
+          <div (click)="openPokemon(pokemon)" class="card pokemon-card" *ngFor="let pokemon of pokemonList">
+            <div class="card-top">
+              <h5 class="title">{{ pokemon?.name | titlecase }}</h5>
+              <h5 class="number">
+                #{{ pokemon.id.toString().padStart(4, "0") }}
+              </h5>
+            </div>
 
+            <div class="card-bottom">
+              <div class="left">
+                <div class="type-card" *ngFor="let type of pokemon?.types">
+                  {{ type.type.name | titlecase }}
+                </div>
+              </div>
+
+              <div class="right">
+                <img
+                  class="poke-img"
+                  [src]="
+                    pokemon['sprites']['versions']['generation-v'][
+                      'black-white'
+                    ]['animated']['front_default']
+                  "
+                />
+              </div>
+            </div>
+            <div class="pokeball-bg-2"></div>
+          </div>
+        </div>
+        <div class="no-data-wrapper" *ngIf="!pokemonList.length">
+            No such pokemon found. Note : Use full name of the pokemon
+        </div>
+      </ng-container>
+      <div class="proxy-paginator" *ngIf="pokemonList.length && (!searchControl?.value || searchControl?.value?.trim() == '')">
+        <div class="left"></div>
+
+        <div class="right">
+          <mat-icon
+            (click)="backPage()"
+            class="icon-btn {{ pageNumber <= 0 ? 'disabled' : '' }}"
+            >keyboard_arrow_left</mat-icon
+          >
+          <span>{{ pageNumber + 1 }}</span>
+          <mat-icon
+            (click)="nextPage()"
+            class="icon-btn {{ pageNumber >= totalPages ? 'disabled' : '' }}"
+            >keyboard_arrow_right</mat-icon
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- * The Top Right Pokeball Background Image -->
+  <div class="pokeball-bg"></div>
 </main>

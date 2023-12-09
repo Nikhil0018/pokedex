@@ -1,5 +1,6 @@
 import { GenericModel } from "./generic.model";
 import { PokemonAbilityModel } from "./pokemon-ability.model";
+import { PokemonSpriteModel } from "./pokemon-sprite.model";
 import { PokemonStatsModel } from "./pokemon-stats.model";
 import { PokemonTypeModel } from "./pokemon-type.model";
 
@@ -13,17 +14,7 @@ export interface PokemonDetailModel {
   name: string;
   order: number;
   species: GenericModel;
-  sprites: {
-    back_default?: string;
-    back_female?: string;
-    back_shiny?: string;
-    back_shiny_female?: string;
-    front_default?: string;
-    front_female?: string;
-    front_shiny?: string;
-    front_shiny_female?: string;
-    other: any;
-  };
+  sprites: PokemonSpriteModel;
   stats: PokemonStatsModel[];
   types: PokemonTypeModel[];
   weight: number;

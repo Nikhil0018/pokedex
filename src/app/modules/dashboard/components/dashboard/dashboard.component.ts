@@ -13,9 +13,7 @@ import { HttpParams } from '@angular/common/http';
 import { PokemonDetailModel } from '../../models/pokemon.model';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { NoopScrollStrategy } from '@angular/cdk/overlay';
-import { PokemonDetailedDialogComponent } from '../../component-pieces/pokemon-detailed-dialog/pokemon-detailed-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -43,12 +41,11 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private pokeApiService: PokeApiService,
-    private matDialog: MatDialog
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
-    console.log(this.screenWidth)
     this.initFormAndListeners();
     this.getAllPokemon();
   }
@@ -158,6 +155,7 @@ export class DashboardComponent implements OnInit {
         sprites: pokemon.sprites,
         stats: pokemon.stats,
         types: pokemon.types,
+        moves: pokemon.moves,
       };
     });
   }
@@ -177,6 +175,7 @@ export class DashboardComponent implements OnInit {
       sprites: poke.sprites,
       stats: poke.stats,
       types: poke.types,
+      moves: poke.moves,
     });
   }
 
@@ -188,24 +187,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public openPokemon(pokemon: PokemonDetailModel): void {
-    let matDialogData = {
-      pokemon: pokemon,
-    };
-    let matDialogConfig: MatDialogConfig = {
-      height: '90%',
-      width: '100%',
-      data: matDialogData,
-    };
-    console.log(this.screenWidth)
-    if (this.screenWidth >= 800) {
-      matDialogConfig.height = '190%';
-      matDialogConfig.width = '50%';
-      matDialogConfig.position = { right: '0' };
-    }
-    let dialogRef = this.matDialog.open(
-      PokemonDetailedDialogComponent,
-      matDialogConfig
-    );
+    this.router.navigate(['/', pokemon.id]);
   }
 
   ngOnDestroy(): void {

@@ -5,14 +5,14 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PokemonCardComponent } from './component-pieces/pokemon-card/pokemon-card.component';
 import { SharedModule } from '../shared/shared.module';
-import { PokemonDetailedDialogComponent } from './component-pieces/pokemon-detailed-dialog/pokemon-detailed-dialog.component';
+import { PokemonDetailedComponent } from './components/pokemon-detailed/pokemon-detailed.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     PokemonCardComponent,
-    PokemonDetailedDialogComponent
+    PokemonDetailedComponent
   ],
   imports: [
     CommonModule,

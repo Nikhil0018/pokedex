@@ -8,3 +8,18 @@ body {
   background-color: #f6f8fc;
   font-family: 'Gilroy' !important;
 }
+
+.center-dialog-no-shadow {
+	position: relative !important;
+}
+
+.center-dialog-no-shadow .mat-dialog-container {
+	padding: 0px;
+	border-radius: 10px !important;
+	box-shadow: none !important;
+}
+
+.light-backdrop {
+	background: #121212;
+	opacity: 0.09 !important;
+}

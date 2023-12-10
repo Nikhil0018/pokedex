@@ -1,0 +1,148 @@
+<main class="dialog-root">
+  <div class="dialog-wrapper">
+    <div class="dialog-upper">
+      <div class="upper-row">
+        <mat-icon (click)="goBack()" class="icon-btn" >keyboard_arrow_left</mat-icon>
+        <h4>#{{ pokemonId.toString().padStart(4, "0") }}</h4>
+      </div>
+
+      <div class="img-wrapper">
+        <mat-icon (click)="toggleImage()" class="icon-btn"
+          >keyboard_arrow_left</mat-icon
+        >
+
+        <img class="poke-img" [src]="pokemonImage" />
+
+        <mat-icon (click)="toggleImage()" class="icon-btn"
+          >keyboard_arrow_right</mat-icon
+        >
+      </div>
+    </div>
+
+    <div class="dialog-body">
+      <h3>{{ pokemon?.name | titlecase }}</h3>
+      <mat-tab-group mat-stretch-tabs="true">
+        <mat-tab label="Basic">
+          <div class="stat-wrapper">
+            <h5 class="label">Type</h5>
+
+            <div class="value list">
+              <div class="type-card" *ngFor="let type of pokemon?.types">
+                {{ type.type.name | titlecase }}
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-wrapper">
+            <h5 class="label">Abilities</h5>
+
+            <div class="value list">
+              <div class="type-card" *ngFor="let ability of pokemon?.abilities">
+                {{ ability.ability.name | titlecase }}
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-wrapper">
+            <h5 class="label">Base Exp</h5>
+
+            <div class="value">{{ pokemon?.base_experience }}</div>
+          </div>
+
+          <div class="stat-wrapper">
+            <h5 class="label">Height</h5>
+
+            <div class="value">{{ pokemon?.height }} dm</div>
+          </div>
+
+          <div class="stat-wrapper">
+            <h5 class="label">Weight</h5>
+
+            <div class="value">{{ pokemon?.weight }} hg</div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Stats">
+          <div class="stat-wrapper">
+            <div class="value desc">
+              {{ pokemonSpeciesData?.flavor_text_entries[0]?.flavor_text }}
+            </div>
+          </div>
+
+          <div class="stat-wrapper">
+            <h5 class="label">Habitat</h5>
+
+            <div class="value">
+              {{ pokemonSpeciesData?.habitat?.name | titlecase }}
+            </div>
+          </div>
+
+          <div class="stat-wrapper">
+            <h5 class="label">Base Stats</h5>
+
+            <div class="stat-col">
+              <ng-container *ngFor="let stat of pokemon?.stats">
+                <div class="stat-row">
+                  <div class="left">
+                    {{ stat.stat.name | titlecase }}
+                  </div>
+                  <div class="middle">
+                    {{ stat.base_stat }}
+                  </div>
+                  <div class="right">
+                    <progress
+                      class="progress-bar"
+                      value="{{ stat.base_stat }}"
+                      max="100"
+                    ></progress>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Moves">
+          <div class="stat-wrapper">
+            <h5 class="label">Moves</h5>
+
+            <div class="value list">
+              <div class="type-card" *ngFor="let move of pokemon?.moves">
+                {{ move.move.name | titlecase }}
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Evolution">
+          <div class="evolution-wrapper" *ngIf="pokemonEvolutionData?.chain">
+            <h2>
+              Evolution Chain for {{ pokemonEvolutionData?.chain.species.name }}
+            </h2>
+            <ng-template
+              [ngTemplateOutletContext]="{
+                evoData: pokemonEvolutionData?.chain
+              }"
+              [ngTemplateOutlet]="pokemon1"
+            >
+            </ng-template>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</main>
+
+<ng-template #pokemon1 let-evoData="evoData">
+  <div class="child">
+    <img (click)="gotoProfile(evoData?.species?.url)" [src]="getImageUrl(evoData?.species?.url)" />
+  </div>
+
+  <ng-container *ngIf="evoData?.evolves_to?.length">
+    &rarr;
+    <div class="inner" *ngFor="let evoDataInner of evoData?.evolves_to">
+      <ng-template
+        [ngTemplateOutletContext]="{ evoData: evoDataInner }"
+        [ngTemplateOutlet]="pokemon1"
+      >
+      </ng-template>
+    </div>
+  </ng-container>
+</ng-template>

@@ -1,5 +1,6 @@
 import { GenericModel } from "./generic.model";
 import { PokemonAbilityModel } from "./pokemon-ability.model";
+import { PokemonMoveModel } from "./pokemon-moves.model";
 import { PokemonSpriteModel } from "./pokemon-sprite.model";
 import { PokemonStatsModel } from "./pokemon-stats.model";
 import { PokemonTypeModel } from "./pokemon-type.model";
@@ -17,5 +18,6 @@ export interface PokemonDetailModel {
   sprites: PokemonSpriteModel;
   stats: PokemonStatsModel[];
   types: PokemonTypeModel[];
+  moves: PokemonMoveModel[];
   weight: number;
 }

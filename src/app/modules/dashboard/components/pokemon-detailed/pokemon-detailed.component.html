@@ -1,118 +1,193 @@
 <main class="dialog-root">
   <div class="dialog-wrapper">
     <div class="dialog-upper">
+      
+      <!-- * Back Button & Number -->
       <div class="upper-row">
-        <mat-icon (click)="goBack()" class="icon-btn" >keyboard_arrow_left</mat-icon>
-        <h4>#{{ pokemonId.toString().padStart(4, "0") }}</h4>
-      </div>
-
-      <div class="img-wrapper">
-        <mat-icon (click)="toggleImage()" class="icon-btn"
+        <mat-icon (click)="goBack()" class="icon-btn"
           >keyboard_arrow_left</mat-icon
         >
+        <h4>#{{ pokemonId.toString().padStart(4, "0") }}</h4>
+      </div>
+        
+      <!-- * Pokemon Image Viewer -->
+      <div class="img-wrapper">
+        <ngx-skeleton-loader
+          *ngIf="loadingBasic"
+          appearance="line"
+          style="height: 150px; width: 100%"
+          [theme]="{ height: '150px', width: '100%' }"
+        ></ngx-skeleton-loader>
+        
+        <ng-container *ngIf="!loadingBasic">
+          <mat-icon (click)="toggleImage()" class="icon-btn"
+            >keyboard_arrow_left</mat-icon
+          >
 
-        <img class="poke-img" [src]="pokemonImage" />
+          <img class="poke-img" [src]="pokemonImage" />
 
-        <mat-icon (click)="toggleImage()" class="icon-btn"
-          >keyboard_arrow_right</mat-icon
-        >
+          <mat-icon (click)="toggleImage()" class="icon-btn"
+            >keyboard_arrow_right</mat-icon
+          >
+        </ng-container>
       </div>
     </div>
 
     <div class="dialog-body">
-      <h3>{{ pokemon?.name | titlecase }}</h3>
+
+      <ngx-skeleton-loader
+        *ngIf="loadingBasic"
+        appearance="line"
+        style="height: 30px; width: 100%"
+        [theme]="{ height: '30px', width: '100%' }"
+      ></ngx-skeleton-loader>
+      <h3 *ngIf="!loadingBasic">{{ pokemon?.name | titlecase }}</h3>
+
       <mat-tab-group mat-stretch-tabs="true">
+
+        <!-- * Pokemon Basic Info -->
         <mat-tab label="Basic">
-          <div class="stat-wrapper">
-            <h5 class="label">Type</h5>
+          <ng-container *ngIf="loadingBasic">
+            <ngx-skeleton-loader
+              *ngIf="loadingBasic"
+              appearance="line"
+              style="height: 90%; width: 100%"
+              [theme]="{ height: '90%', width: '100%' }"
+            ></ngx-skeleton-loader>
+          </ng-container>
 
-            <div class="value list">
-              <div class="type-card" *ngFor="let type of pokemon?.types">
-                {{ type.type.name | titlecase }}
-              </div>
-            </div>
-          </div>
+          <ng-container *ngIf="!loadingBasic">
+            <div class="stat-wrapper">
+              <h5 class="label">Type</h5>
 
-          <div class="stat-wrapper">
-            <h5 class="label">Abilities</h5>
-
-            <div class="value list">
-              <div class="type-card" *ngFor="let ability of pokemon?.abilities">
-                {{ ability.ability.name | titlecase }}
-              </div>
-            </div>
-          </div>
-
-          <div class="stat-wrapper">
-            <h5 class="label">Base Exp</h5>
-
-            <div class="value">{{ pokemon?.base_experience }}</div>
-          </div>
-
-          <div class="stat-wrapper">
-            <h5 class="label">Height</h5>
-
-            <div class="value">{{ pokemon?.height }} dm</div>
-          </div>
-
-          <div class="stat-wrapper">
-            <h5 class="label">Weight</h5>
-
-            <div class="value">{{ pokemon?.weight }} hg</div>
-          </div>
-        </mat-tab>
-        <mat-tab label="Stats">
-          <div class="stat-wrapper">
-            <div class="value desc">
-              {{ pokemonSpeciesData?.flavor_text_entries[0]?.flavor_text }}
-            </div>
-          </div>
-
-          <div class="stat-wrapper">
-            <h5 class="label">Habitat</h5>
-
-            <div class="value">
-              {{ pokemonSpeciesData?.habitat?.name | titlecase }}
-            </div>
-          </div>
-
-          <div class="stat-wrapper">
-            <h5 class="label">Base Stats</h5>
-
-            <div class="stat-col">
-              <ng-container *ngFor="let stat of pokemon?.stats">
-                <div class="stat-row">
-                  <div class="left">
-                    {{ stat.stat.name | titlecase }}
-                  </div>
-                  <div class="middle">
-                    {{ stat.base_stat }}
-                  </div>
-                  <div class="right">
-                    <progress
-                      class="progress-bar"
-                      value="{{ stat.base_stat }}"
-                      max="100"
-                    ></progress>
-                  </div>
+              <div class="value list">
+                <div class="type-card" *ngFor="let type of pokemon?.types">
+                  {{ type.type.name | titlecase }}
                 </div>
-              </ng-container>
-            </div>
-          </div>
-        </mat-tab>
-        <mat-tab label="Moves">
-          <div class="stat-wrapper">
-            <h5 class="label">Moves</h5>
-
-            <div class="value list">
-              <div class="type-card" *ngFor="let move of pokemon?.moves">
-                {{ move.move.name | titlecase }}
               </div>
             </div>
-          </div>
+
+            <div class="stat-wrapper">
+              <h5 class="label">Abilities</h5>
+
+              <div class="value list">
+                <div
+                  class="type-card"
+                  *ngFor="let ability of pokemon?.abilities"
+                >
+                  {{ ability.ability.name | titlecase }}
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-wrapper">
+              <h5 class="label">Base Exp</h5>
+
+              <div class="value">{{ pokemon?.base_experience }}</div>
+            </div>
+
+            <div class="stat-wrapper">
+              <h5 class="label">Height</h5>
+
+              <div class="value">{{ pokemon?.height }} dm</div>
+            </div>
+
+            <div class="stat-wrapper">
+              <h5 class="label">Weight</h5>
+
+              <div class="value">{{ pokemon?.weight }} hg</div>
+            </div>
+          </ng-container>
         </mat-tab>
+
+        <!-- * Pokemon Stats -->
+        <mat-tab label="Stats">
+          <ng-container *ngIf="loadingSpecies">
+            <ngx-skeleton-loader
+              appearance="line"
+              style="height: 90%; width: 100%"
+              [theme]="{ height: '90%', width: '100%' }"
+            ></ngx-skeleton-loader>
+          </ng-container>
+
+          <ng-container *ngIf="!loadingSpecies">
+            <div class="stat-wrapper">
+              <div class="value desc">
+                {{ pokemonSpeciesData?.flavor_text_entries[0]?.flavor_text }}
+              </div>
+            </div>
+
+            <div class="stat-wrapper">
+              <h5 class="label">Habitat</h5>
+
+              <div class="value">
+                {{ pokemonSpeciesData?.habitat?.name | titlecase }}
+              </div>
+            </div>
+
+            <div class="stat-wrapper">
+              <h5 class="label">Base Stats</h5>
+
+              <div class="stat-col">
+                <ng-container *ngFor="let stat of pokemon?.stats">
+                  <div class="stat-row">
+                    <div class="left">
+                      {{ stat.stat.name | titlecase }}
+                    </div>
+                    <div class="middle">
+                      {{ stat.base_stat }}
+                    </div>
+                    <div class="right">
+                      <progress
+                        class="progress-bar"
+                        value="{{ stat.base_stat }}"
+                        max="100"
+                      ></progress>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </mat-tab>
+
+        <!-- * Pokemon Moves -->
+        <mat-tab label="Moves">
+          <ng-container *ngIf="loadingBasic">
+            <ngx-skeleton-loader
+              appearance="line"
+              style="height: 90%; width: 100%"
+              [theme]="{ height: '90%', width: '100%' }"
+            ></ngx-skeleton-loader>
+          </ng-container>
+
+          <ng-container *ngIf="!loadingBasic">
+            <div class="stat-wrapper">
+              <h5 class="label">Moves</h5>
+
+              <div class="value list">
+                <div class="type-card" *ngFor="let move of pokemon?.moves">
+                  {{ move.move.name | titlecase }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </mat-tab>
+
+        <!-- * Pokemon Evolution -->
         <mat-tab label="Evolution">
-          <div class="evolution-wrapper" *ngIf="pokemonEvolutionData?.chain">
+          <ng-container *ngIf="loadingEvolution || !pokemonEvolutionData">
+            <ngx-skeleton-loader
+              appearance="line"
+              style="height: 90%; width: 100%"
+              [theme]="{ height: '90%', width: '100%' }"
+            ></ngx-skeleton-loader>
+          </ng-container>
+
+          <div
+            *ngIf="!loadingEvolution && pokemonEvolutionData?.chain"
+            class="evolution-wrapper"
+          >
             <h2>
               Evolution Chain for {{ pokemonEvolutionData?.chain.species.name }}
             </h2>
@@ -125,14 +200,19 @@
             </ng-template>
           </div>
         </mat-tab>
+
       </mat-tab-group>
+      
     </div>
   </div>
 </main>
 
 <ng-template #pokemon1 let-evoData="evoData">
   <div class="child">
-    <img (click)="gotoProfile(evoData?.species?.url)" [src]="getImageUrl(evoData?.species?.url)" />
+    <img
+      (click)="gotoProfile(evoData?.species?.url)"
+      [src]="getImageUrl(evoData?.species?.url)"
+    />
   </div>
 
   <ng-container *ngIf="evoData?.evolves_to?.length">

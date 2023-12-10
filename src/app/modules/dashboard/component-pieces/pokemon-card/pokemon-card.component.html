@@ -1,1 +1,28 @@
-<p>pokemon-card works!</p>
+<div (click)="openPokemon()" class="card pokemon-card">
+    <div class="card-top">
+      <h5 class="title">{{ pokemon?.name | titlecase }}</h5>
+      <h5 class="number">
+        #{{ pokemon.id.toString().padStart(4, "0") }}
+      </h5>
+    </div>
+
+    <div class="card-bottom">
+      <div class="left">
+        <div class="type-card" *ngFor="let type of pokemon?.types">
+          {{ type.type.name | titlecase }}
+        </div>
+      </div>
+
+      <div class="right">
+        <img
+          class="poke-img"
+          [src]="
+            pokemon['sprites']['versions']['generation-v'][
+              'black-white'
+            ]['animated']['front_default']
+          "
+        />
+      </div>
+    </div>
+    <div class="pokeball-bg-2"></div>
+  </div>

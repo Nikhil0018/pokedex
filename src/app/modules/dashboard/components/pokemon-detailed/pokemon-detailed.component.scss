@@ -69,6 +69,7 @@
         overflow: hidden;
 
         ::ng-deep .mat-tab-group {
+          height: 100%;
           width: 100%;
           overflow-y: auto;
 
@@ -77,6 +78,10 @@
             font-family: "Gilroy";
             font-weight: 800;
             color: #000000;
+          }
+
+          .mat-tab-body-wrapper{
+            height: 100%;
           }
         }
 

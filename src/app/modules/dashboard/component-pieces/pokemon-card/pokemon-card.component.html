@@ -1,4 +1,4 @@
-<div (click)="openPokemon()" class="card pokemon-card">
+<div (click)="openPokemon()" class="card pokemon-card" [ngStyle]="getCardStyle()">
     <div class="card-top">
       <h5 class="title">{{ pokemon?.name | titlecase }}</h5>
       <h5 class="number">

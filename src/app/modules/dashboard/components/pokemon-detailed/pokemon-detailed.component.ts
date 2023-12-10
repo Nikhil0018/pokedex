@@ -87,12 +87,14 @@ export class PokemonDetailedComponent implements OnInit {
   public getSpeciesData(): void {
     this.loadingSpecies = true;
     this.loadingEvolution = true;
+
     this.pokeApiService
       .getPokemonSpeciesDetailById(this.pokemonId)
       .pipe(
         concatMap((response) => {
           this.handlePokemonSpeciesResponse(response);
           this.loadingSpecies = false;
+          
           if (this.pokemonSpeciesData?.evolution_chain?.url) {
             return this.pokeApiService.getPokemonEvolutionDetailByUrl(
               this.pokemonSpeciesData.evolution_chain.url
@@ -100,6 +102,7 @@ export class PokemonDetailedComponent implements OnInit {
           } else {
             return of(null);
           }
+
         }),
         takeUntil(this.unsubscriber$)
       )
@@ -131,10 +134,6 @@ export class PokemonDetailedComponent implements OnInit {
       baby_trigger_item: poke.baby_trigger_item,
       id: poke.id,
     };
-  }
-
-  public getjson(object: any): string {
-    return JSON.stringify(object);
   }
 
   public gotoProfile(url: string): void {

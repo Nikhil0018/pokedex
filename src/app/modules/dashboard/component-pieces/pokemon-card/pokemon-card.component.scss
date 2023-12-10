@@ -1,0 +1,106 @@
+:host {
+  .pokemon-card {
+    background-color: #2cdab1;
+    border-radius: 10px;
+    height: 124px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    box-sizing: border-box;
+    box-shadow: #c9dbff17 0px 0px 24px;
+    cursor: pointer;
+
+    &:hover {
+      .poke-img {
+        transform: scale(1.2);
+      }
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      z-index: 1;
+
+      .title {
+        font-family: "Gilroy" !important;
+        font-size: 20px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+
+      .number {
+        font-family: "Gilroy" !important;
+        font-size: 16px;
+        font-weight: 600;
+        color: #00000066;
+      }
+    }
+
+    .card-bottom {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      overflow: hidden;
+      z-index: 1;
+
+      .left {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        gap: 6px;
+        height: 100%;
+        justify-content: end;
+
+        .type-card {
+          width: fit-content;
+          padding: 5px 12px;
+          color: #ffffff;
+          text-align: center;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 1;
+          font-family: "Gilroy";
+          background-color: #ffffff52;
+          border-radius: 20px;
+        }
+      }
+
+      .right {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+
+        .poke-img {
+          height: 50%;
+          width: 50%;
+          object-fit: contain;
+          z-index: 1;
+          transition: transform 0.3s ease;
+        }
+      }
+    }
+
+    .pokeball-bg-2 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-bottom: -10%;
+      margin-right: -10%;
+      width: 100%;
+      height: 100%;
+      background: url(/assets/icons/pokeball-black.png) no-repeat;
+      background-size: contain;
+      background-position-x: right;
+      background-position-y: bottom;
+      opacity: 0.3;
+      filter: invert(100%);
+    }
+  }
+}

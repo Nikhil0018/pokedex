@@ -111,9 +111,11 @@ export class DashboardComponent implements OnInit {
   public getAllPokemon(): void {
     this.loading = true;
     let queryParams = this.getQueryParams();
+    
     if (this.subscription && !this.subscription.closed) {
       this.subscription.unsubscribe();
     }
+    
     this.subscription = this.pokeApiService
       .getAllPokemon(queryParams)
       .pipe(

@@ -1,5 +1,7 @@
 <main class="dashboard-root">
   <div class="dashboard-wrapper">
+
+    <!-- * Pokemon Search Input -->
     <input
       class="search-input"
       type="text"
@@ -7,7 +9,10 @@
       [formControl]="searchControl"
     />
 
+    <!-- * Pokemon Search Input -->
     <div class="body-wrapper">
+      
+      <!-- * Skeleton Loading In Place Of Grid -->
       <ng-container *ngIf="loading">
         <div class="loading-wrapper">
           <ngx-skeleton-loader
@@ -18,44 +23,30 @@
           ></ngx-skeleton-loader>
         </div>
       </ng-container>
+
+      <!-- * Pokemon Grid -->
       <ng-container *ngIf="!loading">
         <div *ngIf="pokemonList.length" class="pokemon-list">
-          <div (click)="openPokemon(pokemon)" class="card pokemon-card" *ngFor="let pokemon of pokemonList">
-            <div class="card-top">
-              <h5 class="title">{{ pokemon?.name | titlecase }}</h5>
-              <h5 class="number">
-                #{{ pokemon.id.toString().padStart(4, "0") }}
-              </h5>
-            </div>
-
-            <div class="card-bottom">
-              <div class="left">
-                <div class="type-card" *ngFor="let type of pokemon?.types">
-                  {{ type.type.name | titlecase }}
-                </div>
-              </div>
-
-              <div class="right">
-                <img
-                  class="poke-img"
-                  [src]="
-                    pokemon['sprites']['versions']['generation-v'][
-                      'black-white'
-                    ]['animated']['front_default']
-                  "
-                />
-              </div>
-            </div>
-            <div class="pokeball-bg-2"></div>
-          </div>
+          <app-pokemon-card
+            *ngFor="let pokemon of pokemonList"
+            [pokemon]="pokemon"
+            (clickEvent)="openPokemon($event)"
+          ></app-pokemon-card>
         </div>
         <div class="no-data-wrapper" *ngIf="!pokemonList.length">
-            No such pokemon found. Note : Use full name of the pokemon
+          No such pokemon found. Note : Use full name of the pokemon
         </div>
       </ng-container>
-      <div class="proxy-paginator" *ngIf="pokemonList.length && (!searchControl?.value || searchControl?.value?.trim() == '')">
-        <div class="left"></div>
 
+      <!-- * Pokemon Pagination -->
+      <div
+        class="proxy-paginator"
+        *ngIf="
+          pokemonList.length &&
+          (!searchControl?.value || searchControl?.value?.trim() == '')
+        "
+      >
+        <div class="left"></div>
         <div class="right">
           <mat-icon
             (click)="backPage()"
@@ -70,6 +61,7 @@
           >
         </div>
       </div>
+
     </div>
   </div>
 

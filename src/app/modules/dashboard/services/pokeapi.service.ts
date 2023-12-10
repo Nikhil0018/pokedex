@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { BaseApiUrl } from 'src/app/services/base-api-url.service';
 import { PokemonListApiModel } from '../models/pokemon-list.model';
 import { PokemonDetailModel } from '../models/pokemon.model';
+import { PokemonSpeciesDataModel } from '../models/pokemon-species.mode';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,18 @@ export class PokeApiService {
 
   public getPokemonDetailByUrl(url: string): Observable<PokemonDetailModel> {
     return this.http.get<PokemonDetailModel>(
+      url
+    );
+  }
+
+  public getPokemonSpeciesDetailById(id: number): Observable<PokemonSpeciesDataModel> {
+    return this.http.get<PokemonSpeciesDataModel>(
+      `${BaseApiUrl.POKE_API}pokemon-species/${id}`
+    );
+  }
+
+  public getPokemonEvolutionDetailByUrl(url: string): Observable<any> {
+    return this.http.get<any>(
       url
     );
   }

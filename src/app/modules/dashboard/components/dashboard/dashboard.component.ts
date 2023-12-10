@@ -35,7 +35,6 @@ export class DashboardComponent implements OnInit {
   public loading: boolean = false;
   public pokemonList: PokemonDetailModel[] = [];
   public searchControl: FormControl<string>;
-  public greenTypePokemon: string[] = ['grass', 'ground'];
   private subscription: Subscription;
   private unsubscriber$: Subject<void> = new Subject();
 
